@@ -249,16 +249,16 @@ class TestPlaywrightController:
         # Test right click (should not increment clickCount, but should not error)
         await pc.click_id(context, page_obj, "10", button="right")
         right_clicks = await page_obj.evaluate("() => window.clickCount")
-        assert right_clicks == final_clicks, (
-            "Right click should not increment clickCount"
-        )
+        assert (
+            right_clicks == final_clicks
+        ), "Right click should not increment clickCount"
 
         # Test holding left click for 0.2 seconds (should increment clickCount by 1)
         await pc.click_id(context, page_obj, "10", hold=0.2)
         held_clicks = await page_obj.evaluate("() => window.clickCount")
-        assert held_clicks == right_clicks + 1, (
-            "Held left click should increment clickCount by 1"
-        )
+        assert (
+            held_clicks == right_clicks + 1
+        ), "Held left click should increment clickCount by 1"
 
         # If we attempt to click the disabled button (elementId="11"), your script might throw an exception
         # or ignore it. We'll see:
@@ -657,27 +657,27 @@ class TestPlaywrightController:
         await pc.scroll_mousewheel(page_obj, "down")
         after_down_scroll = await page_obj.evaluate("() => window.scrollY")
         assert after_down_scroll > initial_scroll, "Page should scroll down"
-        assert after_down_scroll >= 400, (
-            f"Page should scroll at least 400 pixels, got {after_down_scroll}"
-        )
+        assert (
+            after_down_scroll >= 400
+        ), f"Page should scroll at least 400 pixels, got {after_down_scroll}"
 
         # Test scrolling down with custom pixels (200)
         await pc.scroll_mousewheel(page_obj, "down", 200)
         after_custom_down = await page_obj.evaluate("() => window.scrollY")
         assert after_custom_down > after_down_scroll, "Page should scroll down more"
         expected_scroll = after_down_scroll + 200
-        assert abs(after_custom_down - expected_scroll) <= 10, (
-            f"Expected scroll ~{expected_scroll}, got {after_custom_down}"
-        )
+        assert (
+            abs(after_custom_down - expected_scroll) <= 10
+        ), f"Expected scroll ~{expected_scroll}, got {after_custom_down}"
 
         # Test scrolling up with default pixels (400)
         await pc.scroll_mousewheel(page_obj, "up")
         after_up_scroll = await page_obj.evaluate("() => window.scrollY")
         assert after_up_scroll < after_custom_down, "Page should scroll up"
         expected_up_scroll = after_custom_down - 400
-        assert abs(after_up_scroll - expected_up_scroll) <= 10, (
-            f"Expected scroll ~{expected_up_scroll}, got {after_up_scroll}"
-        )
+        assert (
+            abs(after_up_scroll - expected_up_scroll) <= 10
+        ), f"Expected scroll ~{expected_up_scroll}, got {after_up_scroll}"
 
         # Test scrolling up with custom pixels (200) - use smaller amount to avoid going below 0
         await pc.scroll_mousewheel(page_obj, "up", 200)
@@ -686,9 +686,9 @@ class TestPlaywrightController:
         expected_final = max(
             0, after_up_scroll - 200
         )  # Clamp to 0 if would go negative
-        assert abs(final_scroll - expected_final) <= 10, (
-            f"Expected scroll ~{expected_final}, got {final_scroll}"
-        )
+        assert (
+            abs(final_scroll - expected_final) <= 10
+        ), f"Expected scroll ~{expected_final}, got {final_scroll}"
 
         # Test case-insensitive direction
         current_scroll = await page_obj.evaluate("() => window.scrollY")
@@ -790,18 +790,18 @@ class TestPlaywrightController:
         end_point = await page_obj.evaluate(
             "() => window.dragPath[window.dragPath.length - 1]"
         )
-        assert abs(start_point["x"] - drag_path[0]["x"]) < 5, (
-            "Drag didn't start at correct X coordinate"
-        )
-        assert abs(start_point["y"] - drag_path[0]["y"]) < 5, (
-            "Drag didn't start at correct Y coordinate"
-        )
-        assert abs(end_point["x"] - drag_path[-1]["x"]) < 5, (
-            "Drag didn't end at correct X coordinate"
-        )
-        assert abs(end_point["y"] - drag_path[-1]["y"]) < 5, (
-            "Drag didn't end at correct Y coordinate"
-        )
+        assert (
+            abs(start_point["x"] - drag_path[0]["x"]) < 5
+        ), "Drag didn't start at correct X coordinate"
+        assert (
+            abs(start_point["y"] - drag_path[0]["y"]) < 5
+        ), "Drag didn't start at correct Y coordinate"
+        assert (
+            abs(end_point["x"] - drag_path[-1]["x"]) < 5
+        ), "Drag didn't end at correct X coordinate"
+        assert (
+            abs(end_point["y"] - drag_path[-1]["y"]) < 5
+        ), "Drag didn't end at correct Y coordinate"
 
     async def test_click_coords(self, context, page):
         page_obj, pc = page

@@ -69,9 +69,9 @@ class SimpleQABenchmark(BaseQABenchmark):
         """
         Download the dataset for the benchmark.
         """
-        assert self.data_dir is not None, (
-            "data_dir must be provided for SimpleQABenchmark"
-        )
+        assert (
+            self.data_dir is not None
+        ), "data_dir must be provided for SimpleQABenchmark"
         if not os.path.exists(self.data_dir):
             os.makedirs(self.data_dir, exist_ok=True)
 
@@ -95,9 +95,9 @@ class SimpleQABenchmark(BaseQABenchmark):
 
     def load_dataset(self) -> None:
         """Load the dataset"""
-        assert self.data_dir is not None, (
-            "data_dir must be provided for SimpleQABenchmark"
-        )
+        assert (
+            self.data_dir is not None
+        ), "data_dir must be provided for SimpleQABenchmark"
         if not os.path.isfile(self.file_path):  # type: ignore
             dataset = pd.read_csv(self.DATASET_URL)  # type: ignore
         else:

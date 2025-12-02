@@ -32,20 +32,20 @@ class McpAgent(AssistantAgent):
         **kwargs: Any,
     ):
         if model_context_token_limit is not None:
-            assert "model_context" not in kwargs, (
-                "Only one of model_context_token_limit and model_context kwargs are allowed."
-            )
+            assert (
+                "model_context" not in kwargs
+            ), "Only one of model_context_token_limit and model_context kwargs are allowed."
             model_context = TokenLimitedChatCompletionContext(
                 model_client=self._model_client, token_limit=model_context_token_limit
             )
             kwargs["model_context"] = model_context
 
-        assert mcp_server_params or kwargs.get("workbench", False), (
-            "Must provide either mcp_server_params or workbench."
-        )
-        assert not (mcp_server_params and kwargs.get("workbench", False)), (
-            "Cannot provide both mcp_server_params and workbench. Only one is allowed."
-        )
+        assert mcp_server_params or kwargs.get(
+            "workbench", False
+        ), "Must provide either mcp_server_params or workbench."
+        assert not (
+            mcp_server_params and kwargs.get("workbench", False)
+        ), "Cannot provide both mcp_server_params and workbench. Only one is allowed."
 
         if mcp_server_params:
             workbench = AggregateMcpWorkbench(named_server_params=mcp_server_params)
