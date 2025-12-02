@@ -325,7 +325,7 @@ gemini_client: &gemini_client
         vision: true
         function_calling: true
         json_output: true
-        family: "unknown"
+        family: "gemini-2.0-flash"
         structured_output: true
         multiple_system_messages: false
 
@@ -337,7 +337,7 @@ action_guard_client: *gemini_client
 plan_learning_client: *gemini_client
 ```
 
-Available Gemini models include: `gemini-1.5-flash`, `gemini-1.5-flash-8b`, `gemini-1.5-pro`, `gemini-2.0-flash`, and others.
+Available Gemini models include: `gemini-1.5-flash`, `gemini-1.5-flash-8b`, `gemini-1.5-pro`, `gemini-2.0-flash`, `gemini-2.0-flash-lite-preview-02-05`, and `gemini-2.5-pro-preview-03-25`. For the latest list of available models, see [Google's Gemini documentation](https://ai.google.dev/gemini-api/docs/models).
 
 #### MCP Server Configuration
 
