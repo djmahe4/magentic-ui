@@ -67,6 +67,9 @@ pip install magentic-ui[azure]
 
 # Ollama (local models)
 pip install magentic-ui[ollama]
+
+# Gemini (Google AI)
+pip install magentic-ui[gemini]
 ```
 
 You can then pass a config file to the `magentic-ui` command (<a href="#model-client-configuration"> client config</a>) or change the model client inside the UI settings.
@@ -295,7 +298,46 @@ file_surfer_client: *gpt4o_client
 action_guard_client: *gpt4o_client
 plan_learning_client: *gpt4o_client
 ```
-You can change the client for each of the agents using the config file and use AzureOpenAI (`AzureOpenAIChatCompletionClient`), Ollama and other clients.
+You can change the client for each of the agents using the config file and use AzureOpenAI (`AzureOpenAIChatCompletionClient`), Ollama, Gemini and other clients.
+
+##### Using Gemini Models
+
+To use Google's Gemini models with Magentic-UI, first install the Gemini extras:
+
+```bash
+pip install magentic-ui[gemini]
+```
+
+Set your Gemini API key:
+
+```bash
+export GEMINI_API_KEY="your-gemini-api-key-here"
+```
+
+Then create a config file using the `OpenAIChatCompletionClient` with a Gemini model. The client automatically detects Gemini models and uses the appropriate API endpoint:
+
+```yaml
+gemini_client: &gemini_client
+    provider: OpenAIChatCompletionClient
+    config:
+      model: gemini-2.0-flash
+      model_info:
+        vision: true
+        function_calling: true
+        json_output: true
+        family: "unknown"
+        structured_output: true
+        multiple_system_messages: false
+
+orchestrator_client: *gemini_client
+coder_client: *gemini_client
+web_surfer_client: *gemini_client
+file_surfer_client: *gemini_client
+action_guard_client: *gemini_client
+plan_learning_client: *gemini_client
+```
+
+Available Gemini models include: `gemini-1.5-flash`, `gemini-1.5-flash-8b`, `gemini-1.5-pro`, `gemini-2.0-flash`, and others.
 
 #### MCP Server Configuration
 

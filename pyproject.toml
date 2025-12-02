@@ -70,6 +70,10 @@ ollama = [
     "autogen-ext[ollama]==0.5.7"
 ]
 
+gemini = [
+    "autogen-ext[gemini]==0.5.7"
+]
+
 fara = [
     "pillow",
     "tenacity",
