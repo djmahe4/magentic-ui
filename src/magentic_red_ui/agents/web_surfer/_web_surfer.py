@@ -202,7 +202,7 @@ class WebSurfer(BaseChatAgent, Component[WebSurferConfig]):
 
     component_type = "agent"
     component_config_schema = WebSurferConfig
-    component_provider_override = "magentic_ui.agents.web_surfer.WebSurfer"
+    component_provider_override = "magentic_red_ui.agents.web_surfer.WebSurfer"
 
     DEFAULT_DESCRIPTION = """
     The websurfer has access to a web browser that it can control.

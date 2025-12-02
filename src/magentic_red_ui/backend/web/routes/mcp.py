@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from typing import Dict, Any, Optional
 import asyncio
 
-from magentic_ui.tools.mcp import AggregateMcpWorkbench, NamedMcpServerParams
+from magentic_red_ui.tools.mcp import AggregateMcpWorkbench, NamedMcpServerParams
 
 router = APIRouter()
 

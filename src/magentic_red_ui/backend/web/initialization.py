@@ -42,7 +42,7 @@ class AppInitializer:
         """Determine application root directory"""
         if app_dir := os.getenv("_APPDIR"):
             return Path(app_dir)
-        return Path.home() / ".magentic_ui"
+        return Path.home() / ".magentic_red_ui"
 
     def _get_database_uri(self, app_root: Path) -> str:
         """Generate database URI based on settings or environment"""

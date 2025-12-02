@@ -7,7 +7,7 @@ from .approval_guard import (
     DEFAULT_REQUIRES_APPROVAL,
 )
 from .guarded_action import GuardedAction, ApprovalDeniedError, TrivialGuardedAction
-from .magentic_ui_config import MagenticUIConfig, ModelClientConfigs
+from .magentic_red_ui_config import MagenticUIConfig, ModelClientConfigs
 
 from .version import __version__
 

@@ -4,11 +4,11 @@ import argparse
 import os
 import datetime
 from typing import Optional, Dict, Any, Callable
-from magentic_ui.eval.core import run_evaluate_benchmark_func, evaluate_benchmark_func
-from systems.magentic_ui_sim_user_system import MagenticUISimUserSystem
-from magentic_ui.eval.systems import LLMSystem
-from magentic_ui.eval.benchmarks import WebVoyagerBenchmark
-from magentic_ui.eval.benchmark import Benchmark
+from magentic_red_ui.eval.core import run_evaluate_benchmark_func, evaluate_benchmark_func
+from systems.magentic_red_ui_sim_user_system import MagenticUISimUserSystem
+from magentic_red_ui.eval.systems import LLMSystem
+from magentic_red_ui.eval.benchmarks import WebVoyagerBenchmark
+from magentic_red_ui.eval.benchmark import Benchmark
 from autogen_core.models import ChatCompletionClient
 
 

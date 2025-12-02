@@ -323,7 +323,7 @@ class CoderAgent(BaseChatAgent, Component[CoderAgentConfig]):
 
     component_type = "agent"
     component_config_schema = CoderAgentConfig
-    component_provider_override = "magentic_ui.agents.CoderAgent"
+    component_provider_override = "magentic_red_ui.agents.CoderAgent"
 
     DEFAULT_DESCRIPTION = """
     An agent that can write and execute code to solve tasks or use its language skills to summarize, write, solve math and logic problems.

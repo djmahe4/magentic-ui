@@ -24,7 +24,7 @@ from autogen_core import EVENT_LOGGER_NAME, CancellationToken, ComponentModel
 from autogen_core.logging import LLMCallEvent
 from ...task_team import get_task_team
 from ...types import RunPaths
-from ...magentic_ui_config import MagenticUIConfig, ModelClientConfigs
+from ...magentic_red_ui_config import MagenticUIConfig, ModelClientConfigs
 from ...input_func import InputFuncType
 from ...agents import WebSurfer
 
@@ -310,11 +310,11 @@ class TeamManager:
                     pass
                 else:
                     config_params["browser_headless"] = False
-            magentic_ui_config = MagenticUIConfig(**config_params)  # type: ignore
+            magentic_red_ui_config = MagenticUIConfig(**config_params)  # type: ignore
             self.team = cast(
                 Team,
                 await get_task_team(
-                    magentic_ui_config=magentic_ui_config,
+                    magentic_red_ui_config=magentic_red_ui_config,
                     input_func=input_func,
                     paths=paths,
                 ),

@@ -3,7 +3,7 @@ import json
 import pandas as pd
 import argparse
 from typing import Dict, Any
-from magentic_ui.eval.benchmarks.gaia.gaia import GaiaBenchmark
+from magentic_red_ui.eval.benchmarks.gaia.gaia import GaiaBenchmark
 
 
 def get_run_results_df(

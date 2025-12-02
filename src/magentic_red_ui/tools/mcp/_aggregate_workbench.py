@@ -71,7 +71,7 @@ class AggregateMcpWorkbench(Workbench, Component[AggregateMcpWorkbenchConfig]):
             import asyncio
 
             from autogen_ext.tools.mcp import StdioServerParams
-            from magentic_ui.tools.mcp import AggregateMcpWorkbench, NamedMcpServerParams
+            from magentic_red_ui.tools.mcp import AggregateMcpWorkbench, NamedMcpServerParams
 
             async def main() -> None:
                 server1 = NamedMcpServerParams(
@@ -96,7 +96,7 @@ class AggregateMcpWorkbench(Workbench, Component[AggregateMcpWorkbenchConfig]):
         - All server names must be unique.
     """
 
-    component_provider_override = "magentic_ui.tools.mcp.AggregateMcpWorkbench"
+    component_provider_override = "magentic_red_ui.tools.mcp.AggregateMcpWorkbench"
     component_config_schema = AggregateMcpWorkbenchConfig
 
     def __init__(self, named_server_params: List[NamedMcpServerParams]) -> None:

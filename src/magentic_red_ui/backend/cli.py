@@ -42,7 +42,7 @@ def get_env_file_path():
     Returns:
         str: The full path to the temporary environment file
     """
-    app_dir = os.path.join(os.path.expanduser("~"), ".magentic_ui")
+    app_dir = os.path.join(os.path.expanduser("~"), ".magentic_red_ui")
     if not os.path.exists(app_dir):
         os.makedirs(app_dir, exist_ok=True)
     return os.path.join(app_dir, "temp_env_vars.env")
@@ -61,7 +61,7 @@ def main(
     ] = False,
     docs: bool = typer.Option(True, help="Whether to generate API docs."),
     appdir: str = typer.Option(
-        str(Path.home() / ".magentic_ui"),
+        str(Path.home() / ".magentic_red_ui"),
         help="Path to the app directory where files are stored.",
     ),
     database_uri: Optional[str] = typer.Option(
@@ -142,7 +142,7 @@ def run_ui(
         workers (int, optional): Number of workers to run the UI with. Defaults to 1.
         reload (bool, optional): Whether to reload the UI on code changes. Defaults to False.
         docs (bool, optional): Whether to generate API docs. Defaults to True.
-        appdir (str, optional): Path to the app directory where files are stored. Defaults to ~/.magentic_ui.
+        appdir (str, optional): Path to the app directory where files are stored. Defaults to ~/.magentic_red_ui.
         database_uri (str, optional): Database URI to connect to. Defaults to None.
         upgrade_database (bool, optional): Whether to upgrade the database schema. Defaults to False.
         config (str, optional): Path to the LLM config file. Defaults to config.yaml if present.
@@ -249,7 +249,7 @@ def run_ui(
 
     # Start the Uvicorn server with the configured settings
     uvicorn.run(
-        "magentic_ui.backend.web.app:app",  # Path to the ASGI application
+        "magentic_red_ui.backend.web.app:app",  # Path to the ASGI application
         host=host,
         port=port,
         workers=workers,
@@ -270,7 +270,7 @@ def ui(
     workers: int = 1,
     reload: Annotated[bool, typer.Option("--reload")] = False,
     docs: bool = True,
-    appdir: str = str(Path.home() / ".magentic_ui"),
+    appdir: str = str(Path.home() / ".magentic_red_ui"),
     database_uri: Optional[str] = None,
     upgrade_database: bool = False,
     config: Optional[str] = None,
@@ -353,4 +353,4 @@ def run():
 
 
 if __name__ == "__main__":
-    app()  # Allow running this file directly with 'python -m magentic_ui.backend.cli'
+    app()  # Allow running this file directly with 'python -m magentic_red_ui.backend.cli'

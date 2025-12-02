@@ -276,14 +276,14 @@ def copy_files_to_run_directory(
         new_files (List[Dict[str, Any]]): List of dictionaries containing file information (path, name)
         run_path (str): Path segment containing user_id/run_id
         source_dir (str, optional): Directory where source files are located if path is not specified. Default: `./debug`
-        app_dir (str, optional): Base application directory, defaults to ~/.magentic_ui if None. Default: None
+        app_dir (str, optional): Base application directory, defaults to ~/.magentic_red_ui if None. Default: None
 
     Returns:
         List[Dict[str, Any]]: List of file info dictionaries with updated paths
     """
     # Determine app directory if not provided
     if app_dir is None:
-        app_dir = os.path.join(os.path.expanduser("~"), ".magentic_ui")
+        app_dir = os.path.join(os.path.expanduser("~"), ".magentic_red_ui")
 
     # Create the destination directory if it doesn't exist
     dest_dir = os.path.join(app_dir, "files", run_path)

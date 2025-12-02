@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "magentic_ui"
+name = "magentic_red_ui"
 license = "MIT"
 dynamic = ["version"]
 description = "A research prototype of a human-centered interface powered by a multi-agent system"
@@ -84,9 +84,9 @@ fara = [
 ]
 
 [project.scripts]
-magentic = "magentic_ui.backend.cli:run"
-magentic-ui = "magentic_ui.backend.cli:run"
-magentic-cli = "magentic_ui._cli:main"
+magentic-red = "magentic_red_ui.backend.cli:run"
+magentic-red-ui = "magentic_red_ui.backend.cli:run"
+magentic-red-cli = "magentic_red_ui._cli:main"
 
 [tool.uv]
 dev-dependencies = [
@@ -141,11 +141,11 @@ warn_unused_ignores = false
 disallow_incomplete_defs = true
 disallow_untyped_decorators = true
 disallow_any_unimported = true
-exclude = ["src/magentic_ui/eval"]
+exclude = ["src/magentic_red_ui/eval"]
 
 [tool.pyright]
 include = ["src", "tests", "samples"]
-exclude = ["src/magentic_ui/eval/benchmarks/assistantbench/evaluate_utils", "src/magentic_ui/agents/web_surfer/_cua_web_surfer.py", "src/magentic_ui/backend/web/routes", "src/magentic_ui/agents/web_surfer/fara", "src/magentic_ui/tools/playwright/playwright_controller_fara.py"]
+exclude = ["src/magentic_red_ui/eval/benchmarks/assistantbench/evaluate_utils", "src/magentic_red_ui/agents/web_surfer/_cua_web_surfer.py", "src/magentic_red_ui/backend/web/routes", "src/magentic_red_ui/agents/web_surfer/fara", "src/magentic_red_ui/tools/playwright/playwright_controller_fara.py"]
 typeCheckingMode = "strict"
 reportUnnecessaryIsInstance = false
 reportMissingTypeStubs = false
@@ -153,22 +153,22 @@ reportMissingTypeStubs = false
 
 [tool.hatch.build.targets.wheel]
 include-package-data = true
-packages = ["src/magentic_ui"]
+packages = ["src/magentic_red_ui"]
 
 [tool.hatch.version]
-path = "src/magentic_ui/version.py"
+path = "src/magentic_red_ui/version.py"
 
 [tool.hatch.build]
 include = [
-  "src/magentic_ui/**/*.py",
-  "src/magentic_ui/**/*.yaml",
-  "src/magentic_ui/**/*.json",
-  "src/magentic_ui/**/*.js",
-  "src/magentic_ui/backend/web/ui/**/*", 
-  "src/magentic_ui/docker/**/*",
+  "src/magentic_red_ui/**/*.py",
+  "src/magentic_red_ui/**/*.yaml",
+  "src/magentic_red_ui/**/*.json",
+  "src/magentic_red_ui/**/*.js",
+  "src/magentic_red_ui/backend/web/ui/**/*", 
+  "src/magentic_red_ui/docker/**/*",
 ]
 exclude = [
-  "src/magentic_ui/tests/**",
+  "src/magentic_red_ui/tests/**",
   "**/__pycache__",
   "**/.*.swp",
 ]

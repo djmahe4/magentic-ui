@@ -5,12 +5,12 @@ from autogen_agentchat.ui import Console
 from autogen_ext.models.openai import OpenAIChatCompletionClient
 from autogen_agentchat.conditions import TextMentionTermination
 from autogen_agentchat.teams import RoundRobinGroupChat
-from magentic_ui.agents import WebSurfer
+from magentic_red_ui.agents import WebSurfer
 from autogen_agentchat.agents import UserProxyAgent
 import logging
 
 
-from magentic_ui.tools.playwright import (
+from magentic_red_ui.tools.playwright import (
     HeadlessDockerPlaywrightBrowser,
     VncDockerPlaywrightBrowser,
     LocalPlaywrightBrowser,
@@ -19,7 +19,7 @@ from magentic_ui.tools.playwright import (
 
 # Configure logging
 logging.basicConfig(level=logging.WARN)
-logger = logging.getLogger("magentic_ui.tools.docker_browser").setLevel(logging.INFO)
+logger = logging.getLogger("magentic_red_ui.tools.docker_browser").setLevel(logging.INFO)
 
 
 async def main() -> None:

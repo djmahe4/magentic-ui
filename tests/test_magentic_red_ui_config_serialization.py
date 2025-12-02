@@ -2,7 +2,7 @@ import json
 
 import pytest
 import yaml
-from magentic_ui.magentic_ui_config import MagenticUIConfig
+from magentic_red_ui.magentic_red_ui_config import MagenticUIConfig
 
 YAML_CONFIG = """
 model_client_configs:

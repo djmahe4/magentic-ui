@@ -85,7 +85,7 @@ def load_system_class(system_name: str) -> Type[BaseSystem]:
     Returns:
         Type[BaseSystem]: The loaded system class.
     """
-    module_name = "magentic_ui.eval.systems"
+    module_name = "magentic_red_ui.eval.systems"
     class_name = f"{system_name}System"
     module = importlib.import_module(module_name)
     system_class = getattr(module, class_name)

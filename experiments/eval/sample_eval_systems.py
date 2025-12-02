@@ -1,10 +1,10 @@
 from autogen_core.models import ChatCompletionClient
 from systems import MagenticUIAutonomousSystem
 from systems.magentic_one_system import MagenticOneSystem
-from magentic_ui.eval.benchmarks import WebVoyagerBenchmark
+from magentic_red_ui.eval.benchmarks import WebVoyagerBenchmark
 import os
 
-def test_magentic_ui_system():
+def test_magentic_red_ui_system():
     default_client_config = {
         "provider": "OpenAIChatCompletionClient",
         "config": {
@@ -33,11 +33,11 @@ def test_magentic_ui_system():
     benchmark.load_dataset()
     test_task = benchmark.tasks["Allrecipes--0"]
     print(test_task)
-    os.makedirs("test_output_magentic_ui", exist_ok=True)
+    os.makedirs("test_output_magentic_red_ui", exist_ok=True)
     answer = system.get_answer(
         task_id="Allrecipes--0",
         task=test_task,
-        output_dir="test_output_magentic_ui",
+        output_dir="test_output_magentic_red_ui",
     )
     print(answer)
     score = benchmark.evaluator(test_task, answer)

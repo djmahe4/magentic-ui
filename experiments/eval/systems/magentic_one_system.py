@@ -21,9 +21,9 @@ from autogen_ext.agents.magentic_one import MagenticOneCoderAgent
 from autogen_ext.code_executors.local import LocalCommandLineCodeExecutor
 from autogen_agentchat.agents import CodeExecutorAgent
 from autogen_agentchat.teams import MagenticOneGroupChat
-from magentic_ui.eval.basesystem import BaseSystem
-from magentic_ui.eval.models import BaseTask, BaseCandidate, WebVoyagerCandidate
-from magentic_ui.types import CheckpointEvent
+from magentic_red_ui.eval.basesystem import BaseSystem
+from magentic_red_ui.eval.models import BaseTask, BaseCandidate, WebVoyagerCandidate
+from magentic_red_ui.types import CheckpointEvent
 
 logger = logging.getLogger(__name__)
 logging.getLogger("autogen").setLevel(logging.WARNING)

@@ -189,7 +189,7 @@ def load_benchmark_class(benchmark_name: str) -> Type[Benchmark]:
     Returns:
         Type[Benchmark]: The benchmark class.
     """
-    module_name = "magentic_ui.eval.benchmarks"
+    module_name = "magentic_red_ui.eval.benchmarks"
     class_name = f"{benchmark_name}Benchmark"
     module = importlib.import_module(module_name)
     benchmark_class = getattr(module, class_name)

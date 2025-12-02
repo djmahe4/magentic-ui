@@ -52,7 +52,7 @@ class GroupChat(BaseGroupChat, Component[GroupChatConfig]):
     """
 
     component_config_schema = GroupChatConfig
-    component_provider_override = "magentic_ui.teams.GroupChat"
+    component_provider_override = "magentic_red_ui.teams.GroupChat"
 
     def __init__(
         self,

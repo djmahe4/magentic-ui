@@ -24,7 +24,7 @@ from .task_team import get_task_team
 from loguru import logger
 
 from .agents.mcp._config import McpAgentConfig
-from .magentic_ui_config import MagenticUIConfig, ModelClientConfigs, SentinelPlanConfig
+from .magentic_red_ui_config import MagenticUIConfig, ModelClientConfigs, SentinelPlanConfig
 from .types import RunPaths
 from .utils import LLMCallFilter
 from ._docker import (
@@ -122,7 +122,7 @@ async def get_team(
     task: str | None = None,
     final_answer_prompt: str | None = None,
     debug: bool = False,
-    state_file: str = ".magentic_ui_state.json",
+    state_file: str = ".magentic_red_ui_state.json",
     internal_workspace_root: str | None = None,
     external_workspace_root: str | None = None,
     playwright_port: int = -1,
@@ -242,7 +242,7 @@ async def get_team(
     mcp_agents = mcp_agents or []
     log_debug("Model client configs created for agents", debug)
 
-    magentic_ui_config = MagenticUIConfig(
+    magentic_red_ui_config = MagenticUIConfig(
         model_client_configs=model_client_configs,
         mcp_agent_configs=mcp_agents,
         cooperative_planning=cooperative_planning,
@@ -278,7 +278,7 @@ async def get_team(
     # Creates and returns a RoundRobinGroupChat or a GroupChat with the passed configs
     log_debug("Calling get_task_team to create team object", debug)
     team = await get_task_team(
-        magentic_ui_config=magentic_ui_config,
+        magentic_red_ui_config=magentic_red_ui_config,
         input_func=cancellable_input,
         paths=paths,
     )
@@ -288,7 +288,7 @@ async def get_team(
     log_debug("Team creation completed successfully", debug)
 
     if use_pretty_ui:
-        display_magentic_ui_logo()
+        display_magentic_red_ui_logo()
     log_debug("Logo displayed", debug)
 
     try:
@@ -421,7 +421,7 @@ async def get_team(
         log_debug("Team closed successfully", debug)
 
 
-def display_magentic_ui_logo():
+def display_magentic_red_ui_logo():
     """Display the MAGENTIC UI entry text."""
 
     magentic_logo = f"""{MAGENTA}{BOLD}╔═══════════════════════════════════════════════════════════════════╗

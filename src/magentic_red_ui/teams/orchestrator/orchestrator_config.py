@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from ...types import Plan
 from typing import List, Literal, Optional, Union
-from ...magentic_ui_config import SentinelPlanConfig
+from ...magentic_red_ui_config import SentinelPlanConfig
 
 
 class OrchestratorConfig(BaseModel):
