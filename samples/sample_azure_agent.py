@@ -15,7 +15,12 @@ from magentic_red_ui.tools.playwright.browser import get_browser_resource_config
 from magentic_red_ui.utils import get_internal_urls
 from magentic_red_ui.teams import GroupChat, RoundRobinGroupChat
 from magentic_red_ui.teams.orchestrator.orchestrator_config import OrchestratorConfig
-from magentic_red_ui.agents import WebSurfer, CoderAgent, USER_PROXY_DESCRIPTION, FileSurfer
+from magentic_red_ui.agents import (
+    WebSurfer,
+    CoderAgent,
+    USER_PROXY_DESCRIPTION,
+    FileSurfer,
+)
 from magentic_red_ui.magentic_red_ui_config import MagenticUIConfig, ModelClientConfigs
 from magentic_red_ui.types import RunPaths
 from magentic_red_ui.agents.web_surfer import WebSurferConfig
@@ -92,9 +97,9 @@ async def get_task_team_with_azure_agent(
         return ChatCompletionClient.load_component(model_client_config)
 
     if not magentic_red_ui_config.inside_docker:
-        assert (
-            paths.external_run_dir == paths.internal_run_dir
-        ), "External and internal run dirs must be the same in non-docker mode"
+        assert paths.external_run_dir == paths.internal_run_dir, (
+            "External and internal run dirs must be the same in non-docker mode"
+        )
 
     model_client_orch = get_model_client(
         magentic_red_ui_config.model_client_configs.orchestrator
@@ -111,7 +116,9 @@ async def get_task_team_with_azure_agent(
         magentic_red_ui_config.websurfer_loop if magentic_red_ui_config else False
     )
 
-    model_client_coder = get_model_client(magentic_red_ui_config.model_client_configs.coder)
+    model_client_coder = get_model_client(
+        magentic_red_ui_config.model_client_configs.coder
+    )
     model_client_file_surfer = get_model_client(
         magentic_red_ui_config.model_client_configs.file_surfer
     )
@@ -165,15 +172,15 @@ async def get_task_team_with_azure_agent(
     if magentic_red_ui_config.user_proxy_type == "dummy":
         user_proxy = DummyUserProxy(name="user_proxy")
     elif magentic_red_ui_config.user_proxy_type == "metadata":
-        assert (
-            magentic_red_ui_config.task is not None
-        ), "Task must be provided for metadata user proxy"
-        assert (
-            magentic_red_ui_config.hints is not None
-        ), "Hints must be provided for metadata user proxy"
-        assert (
-            magentic_red_ui_config.answer is not None
-        ), "Answer must be provided for metadata user proxy"
+        assert magentic_red_ui_config.task is not None, (
+            "Task must be provided for metadata user proxy"
+        )
+        assert magentic_red_ui_config.hints is not None, (
+            "Hints must be provided for metadata user proxy"
+        )
+        assert magentic_red_ui_config.answer is not None, (
+            "Answer must be provided for metadata user proxy"
+        )
         user_proxy = MetadataUserProxy(
             name="user_proxy",
             description="Metadata User Proxy Agent",

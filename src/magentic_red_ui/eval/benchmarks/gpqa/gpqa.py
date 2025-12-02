@@ -88,9 +88,9 @@ class GPQABenchmark(BaseQABenchmark):
         )
 
     def get_split_tasks(self, split: str) -> List[str]:
-        assert (
-            split in self.SPLITS
-        ), f"Invalid split: {split}. Must be one of {self.SPLITS}."
+        assert split in self.SPLITS, (
+            f"Invalid split: {split}. Must be one of {self.SPLITS}."
+        )
         return [task.id for task in self.tasks.values() if task.set == split]
 
     def evaluator(self, task: GPQATask, candidate: GPQACandidate) -> GPQAEvalResult:  # type: ignore

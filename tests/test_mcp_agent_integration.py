@@ -90,6 +90,8 @@ async def test_mcp_agent_integration(mcp_agent_config: List[McpAgentConfig]):
 
             # stop this test from getting stuck in a loop
             if message_counter > MAX_MESSAGES:
-                assert False, f"Test failed: No {MCP_AGENT_NAME} messages were received within the first {MAX_MESSAGES} messages."
+                assert False, (
+                    f"Test failed: No {MCP_AGENT_NAME} messages were received within the first {MAX_MESSAGES} messages."
+                )
     finally:
         cancellation_token.cancel()

@@ -19,7 +19,9 @@ from magentic_red_ui.tools.playwright import (
 
 # Configure logging
 logging.basicConfig(level=logging.WARN)
-logger = logging.getLogger("magentic_red_ui.tools.docker_browser").setLevel(logging.INFO)
+logger = logging.getLogger("magentic_red_ui.tools.docker_browser").setLevel(
+    logging.INFO
+)
 
 
 async def main() -> None:

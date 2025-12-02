@@ -24,7 +24,11 @@ from .task_team import get_task_team
 from loguru import logger
 
 from .agents.mcp._config import McpAgentConfig
-from .magentic_red_ui_config import MagenticUIConfig, ModelClientConfigs, SentinelPlanConfig
+from .magentic_red_ui_config import (
+    MagenticUIConfig,
+    ModelClientConfigs,
+    SentinelPlanConfig,
+)
 from .types import RunPaths
 from .utils import LLMCallFilter
 from ._docker import (

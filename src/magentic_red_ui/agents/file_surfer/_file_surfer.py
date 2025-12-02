@@ -625,7 +625,7 @@ class FileSurfer(BaseChatAgent, Component[FileSurferConfig]):
         current_page = self._browser.viewport_current_page
         total_pages = len(self._browser.viewport_pages)
         header += (
-            f" Viewport position: Showing page {current_page+1} of {total_pages}.\n"
+            f" Viewport position: Showing page {current_page + 1} of {total_pages}.\n"
         )
 
         return (header, self._browser.viewport)
