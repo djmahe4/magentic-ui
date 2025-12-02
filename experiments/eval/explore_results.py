@@ -3,7 +3,7 @@ import json
 import pandas as pd
 import argparse
 from typing import Dict, Any
-from magentic_ui.eval.benchmarks.gaia.gaia import GaiaBenchmark
+from magentic_red_ui.eval.benchmarks.gaia.gaia import GaiaBenchmark
 
 
 def get_run_results_df(
@@ -192,9 +192,9 @@ def main():
     print(
         f"Success rate: {((len(all_tasks) - len(failed_tasks)) / len(all_tasks) * 100):.2f}%"
     )
-    print(f"Accuracy (excluding 'unable to determine'): {acc_excl*100:.2f}%")
+    print(f"Accuracy (excluding 'unable to determine'): {acc_excl * 100:.2f}%")
     print(
-        f"Accuracy (counting 'unable to determine' as correct): {acc_unable_correct*100:.2f}%"
+        f"Accuracy (counting 'unable to determine' as correct): {acc_unable_correct * 100:.2f}%"
     )
 
 

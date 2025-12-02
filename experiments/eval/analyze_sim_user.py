@@ -219,10 +219,10 @@ async def process_csv(csv_path: str, output_path: str) -> None:
 
         logger.info("\nLLM Execution Statistics:")
         logger.info(
-            f"Tasks with at least 1 execution: {tasks_with_execution}/{total_tasks} ({(tasks_with_execution/total_tasks)*100:.2f}%)"
+            f"Tasks with at least 1 execution: {tasks_with_execution}/{total_tasks} ({(tasks_with_execution / total_tasks) * 100:.2f}%)"
         )
         logger.info(
-            f"Tasks with at least 1 planning: {tasks_with_planning}/{total_tasks} ({(tasks_with_planning/total_tasks)*100:.2f}%)"
+            f"Tasks with at least 1 planning: {tasks_with_planning}/{total_tasks} ({(tasks_with_planning / total_tasks) * 100:.2f}%)"
         )
         logger.info("\nWhen LLM is used at least once:")
         logger.info(f"  - Median executions: {median_when_used:.2f}")

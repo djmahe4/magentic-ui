@@ -4,8 +4,8 @@
 
 _Automate your web tasks while you stay in control_
 
-[![image](https://img.shields.io/pypi/v/magentic_ui.svg)](https://pypi.python.org/pypi/magentic_ui)
-[![image](https://img.shields.io/pypi/l/magentic_ui.svg)](https://pypi.python.org/pypi/magentic_ui)
+[![image](https://img.shields.io/pypi/v/magentic_red_ui.svg)](https://pypi.python.org/pypi/magentic_red_ui)
+[![image](https://img.shields.io/pypi/l/magentic_red_ui.svg)](https://pypi.python.org/pypi/magentic_red_ui)
 ![Python Versions](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue)
 [![arXiv](https://img.shields.io/badge/arXiv-2507.22358-b31b1b.svg)](https://arxiv.org/abs/2507.22358)
 
@@ -35,13 +35,13 @@ Here's how you can get started with Magentic-UI:
 # 1. Setup environment
 python3 -m venv .venv
 source .venv/bin/activate
-pip install magentic-ui --upgrade
+pip install magentic-red-ui --upgrade
 
 # 2. Set your API key
 export OPENAI_API_KEY="your-api-key-here"
 
 # 3. Launch Magentic-UI
-magentic-ui --port 8081
+magentic-red-ui --port 8081
 ```
 
 Then open <http://localhost:8081> in your browser to interact with Magentic-UI!
@@ -52,7 +52,7 @@ Then open <http://localhost:8081> in your browser to interact with Magentic-UI!
 
 **Without Docker** (limited functionality: no code execution):
 ```bash
-magentic-ui --run-without-docker --port 8081
+magentic-red-ui --run-without-docker --port 8081
 ```
 
 **Command Line Interface**:
@@ -63,15 +63,18 @@ magentic-cli --work-dir PATH/TO/STORE/DATA
 **Custom LLM Clients**:
 ```bash
 # Azure
-pip install magentic-ui[azure]
+pip install magentic-red-ui[azure]
 
 # Ollama (local models)
-pip install magentic-ui[ollama]
+pip install magentic-red-ui[ollama]
+
+# Gemini (Google AI)
+pip install magentic-red-ui[gemini]
 ```
 
-You can then pass a config file to the `magentic-ui` command (<a href="#model-client-configuration"> client config</a>) or change the model client inside the UI settings.
+You can then pass a config file to the `magentic-red-ui` command (<a href="#model-client-configuration"> client config</a>) or change the model client inside the UI settings.
 
-For further details on installation please read the   <a href="#️-installation">🛠️ Installation</a> section. For common installation issues and their solutions, please refer to the [troubleshooting document](TROUBLESHOOTING.md). See advanced usage instructions with the command `magentic-ui --help`. 
+For further details on installation please read the   <a href="#️-installation">🛠️ Installation</a> section. For common installation issues and their solutions, please refer to the [troubleshooting document](TROUBLESHOOTING.md). See advanced usage instructions with the command `magentic-red-ui --help`. 
 
 ## Quick Navigation:
 <p align="center">
@@ -152,7 +155,7 @@ To reproduce these experimental results, please see the following [instructions]
 
 
 
-If you're interested in reading more checkout our [technical report](https://www.microsoft.com/en-us/research/wp-content/uploads/2025/07/magentic-ui-report.pdf) and [blog post](https://www.microsoft.com/en-us/research/blog/magentic-ui-an-experimental-human-centered-web-agent/).
+If you're interested in reading more checkout our [technical report](https://www.microsoft.com/en-us/research/wp-content/uploads/2025/07/magentic-red-ui-report.pdf) and [blog post](https://www.microsoft.com/en-us/research/blog/magentic-red-ui-an-experimental-human-centered-web-agent/).
 
 
 ## Installation
@@ -184,7 +187,7 @@ Magentic-UI is available on PyPI. We recommend using a virtual environment to av
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install magentic-ui
+pip install magentic-red-ui
 ```
 
 Alternatively, if you use [`uv`](https://docs.astral.sh/uv/getting-started/installation/) for dependency management, you can install Magentic-UI with:
@@ -192,7 +195,7 @@ Alternatively, if you use [`uv`](https://docs.astral.sh/uv/getting-started/insta
 ```bash
 uv venv --python=3.12 .venv
 . .venv/bin/activate
-uv pip install magentic-ui
+uv pip install magentic-red-ui
 ```
 
 
@@ -201,7 +204,7 @@ uv pip install magentic-ui
 To run Magentic-UI, make sure that Docker is running, then run the following command:
 
 ```bash
-magentic-ui --port 8081
+magentic-red-ui --port 8081
 ```
 
 >**Note**: Running this command for the first time will pull two docker images required for the Magentic-UI agents. If you encounter problems, you can build them directly with the following command:
@@ -218,12 +221,12 @@ Once the server is running, you can access the UI at <http://localhost:8081>.
 
 ### Fara-7B
 
-1) First install magentic-ui with the fara extras:
+1) First install magentic-red-ui with the fara extras:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install magentic-ui[fara]
+pip install magentic-red-ui[fara]
 ```
 
 2) In a seperate process, serve the Fara-7B model using vLLM:
@@ -262,7 +265,7 @@ Note: if you are hosting vLLM on a different port or host, change the `base_url`
 Then launch Magentic-UI with the fara agent:
 
 ```bash
-magentic-ui --fara --port 8081 --config fara_config.yaml 
+magentic-red-ui --fara --port 8081 --config fara_config.yaml 
 ```
 
 Finally, navigate to <http://localhost:8081> to access the interface!
@@ -274,7 +277,7 @@ Finally, navigate to <http://localhost:8081> to access the interface!
 If you want to use a different OpenAI key, or if you want to configure use with Azure OpenAI or Ollama, you can do so inside the UI by navigating to settings (top right icon) and changing model configuration. Another option is to pass a yaml config file when you start Magentic-UI which will override any settings in the UI:
 
 ```bash
-magentic-ui --port 8081 --config config.yaml
+magentic-red-ui --port 8081 --config config.yaml
 ```
 
 Where the `config.yaml` should look as follows with an AutoGen model client configuration:
@@ -295,7 +298,46 @@ file_surfer_client: *gpt4o_client
 action_guard_client: *gpt4o_client
 plan_learning_client: *gpt4o_client
 ```
-You can change the client for each of the agents using the config file and use AzureOpenAI (`AzureOpenAIChatCompletionClient`), Ollama and other clients.
+You can change the client for each of the agents using the config file and use AzureOpenAI (`AzureOpenAIChatCompletionClient`), Ollama, Gemini and other clients.
+
+##### Using Gemini Models
+
+To use Google's Gemini models with Magentic-UI, first install the Gemini extras:
+
+```bash
+pip install magentic-red-ui[gemini]
+```
+
+Set your Gemini API key:
+
+```bash
+export GEMINI_API_KEY="your-gemini-api-key-here"
+```
+
+Then create a config file using the `OpenAIChatCompletionClient` with a Gemini model. The client automatically detects Gemini models and uses the appropriate API endpoint:
+
+```yaml
+gemini_client: &gemini_client
+    provider: OpenAIChatCompletionClient
+    config:
+      model: gemini-2.0-flash
+      model_info:
+        vision: true
+        function_calling: true
+        json_output: true
+        family: "gemini-2.0-flash"
+        structured_output: true
+        multiple_system_messages: false
+
+orchestrator_client: *gemini_client
+coder_client: *gemini_client
+web_surfer_client: *gemini_client
+file_surfer_client: *gemini_client
+action_guard_client: *gemini_client
+plan_learning_client: *gemini_client
+```
+
+Available Gemini models include: `gemini-1.5-flash`, `gemini-1.5-flash-8b`, `gemini-1.5-pro`, `gemini-2.0-flash`, `gemini-2.0-flash-lite-preview-02-05`, and `gemini-2.5-pro-preview-03-25`. For the latest list of available models, see [Google's Gemini documentation](https://ai.google.dev/gemini-api/docs/models).
 
 #### MCP Server Configuration
 
@@ -341,8 +383,8 @@ This step is primarily for users seeking to make modifications to the code, are 
 #### 2. Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/microsoft/magentic-ui.git
-cd magentic-ui
+git clone https://github.com/microsoft/magentic-red-ui.git
+cd magentic-red-ui
 ```
 
 #### 3. Install Magentic-UI's dependencies with uv or your favorite package manager:
@@ -377,7 +419,7 @@ yarn build
 #### 5. Run Magentic-UI, as usual.
 
 ```bash
-magentic-ui --port 8081
+magentic-red-ui --port 8081
 ```
 
 
@@ -406,7 +448,7 @@ npm run start
 4. Then run the UI:
 
 ```bash
-magentic-ui --port 8081
+magentic-red-ui --port 8081
 ```
 
 The frontend from source will be available at <http://localhost:8000>, and the compiled frontend will be available at <http://localhost:8081>.

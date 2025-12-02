@@ -6,10 +6,10 @@ from autogen_agentchat.base import TaskResult
 from autogen_agentchat.messages import BaseTextChatMessage
 from autogen_core import CancellationToken, ComponentModel
 from autogen_ext.tools.mcp import StdioServerParams
-from magentic_ui.agents.mcp import McpAgentConfig
-from magentic_ui.magentic_ui_config import MagenticUIConfig, ModelClientConfigs
-from magentic_ui.task_team import RunPaths, get_task_team
-from magentic_ui.tools.mcp import NamedMcpServerParams
+from magentic_red_ui.agents.mcp import McpAgentConfig
+from magentic_red_ui.magentic_red_ui_config import MagenticUIConfig, ModelClientConfigs
+from magentic_red_ui.task_team import RunPaths, get_task_team
+from magentic_red_ui.tools.mcp import NamedMcpServerParams
 
 
 MCP_AGENT_NAME = "mcp_agent"
@@ -71,7 +71,7 @@ async def test_mcp_agent_integration(mcp_agent_config: List[McpAgentConfig]):
         browser_local=True,
     )
 
-    team = await get_task_team(magentic_ui_config=config, paths=_dummy_paths())
+    team = await get_task_team(magentic_red_ui_config=config, paths=_dummy_paths())
     cancellation_token = CancellationToken()
     # Send a test message to the team and get a response
     try:

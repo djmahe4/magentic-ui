@@ -17,16 +17,16 @@ from autogen_agentchat.messages import (
     TextMessage,
 )
 from autogen_agentchat.conditions import TimeoutTermination
-from magentic_ui import OrchestratorConfig
-from magentic_ui.eval.basesystem import BaseSystem
-from magentic_ui.eval.models import BaseTask, BaseCandidate, WebVoyagerCandidate
-from magentic_ui.types import CheckpointEvent
-from magentic_ui.agents import WebSurfer, CoderAgent, FileSurfer
-from magentic_ui.teams import GroupChat
-from magentic_ui.agents.users import MetadataUserProxy
-from magentic_ui.tools.playwright.browser import VncDockerPlaywrightBrowser
-from magentic_ui.tools.playwright.browser.utils import get_available_port
-from magentic_ui.approval_guard import (
+from magentic_red_ui import OrchestratorConfig
+from magentic_red_ui.eval.basesystem import BaseSystem
+from magentic_red_ui.eval.models import BaseTask, BaseCandidate, WebVoyagerCandidate
+from magentic_red_ui.types import CheckpointEvent
+from magentic_red_ui.agents import WebSurfer, CoderAgent, FileSurfer
+from magentic_red_ui.teams import GroupChat
+from magentic_red_ui.agents.users import MetadataUserProxy
+from magentic_red_ui.tools.playwright.browser import VncDockerPlaywrightBrowser
+from magentic_red_ui.tools.playwright.browser.utils import get_available_port
+from magentic_red_ui.approval_guard import (
     ApprovalGuard,
     ApprovalGuardContext,
     ApprovalConfig,
@@ -346,7 +346,7 @@ class MagenticUISimUserSystem(BaseSystem):
                 from autogen_core import CancellationToken
                 from autogen_core.models import UserMessage
 
-                prompt = f"""Rewrite the following helpful hints to help solve the task, but remove any information that directly reveals the answer. \nKeep the hints as close to the original as possible but remove any information that directly reveals the answer.\nHelpful hints: {task_metadata}\n\nAnswer: {getattr(task, 'ground_truth', '')}\n\nDo not include anything else in your response except the rewritten hints.\nRewritten helpful hints:"""
+                prompt = f"""Rewrite the following helpful hints to help solve the task, but remove any information that directly reveals the answer. \nKeep the hints as close to the original as possible but remove any information that directly reveals the answer.\nHelpful hints: {task_metadata}\n\nAnswer: {getattr(task, "ground_truth", "")}\n\nDo not include anything else in your response except the rewritten hints.\nRewritten helpful hints:"""
                 result = await model_client_orch.create(
                     messages=[UserMessage(content=prompt, source="user")],
                     cancellation_token=CancellationToken(),
@@ -417,9 +417,9 @@ class MagenticUISimUserSystem(BaseSystem):
                     # remove the "FINAL ANSWER:" part and get the string after it
                     answer = answer.split("FINAL ANSWER:")[1].strip()
 
-            assert isinstance(
-                answer, str
-            ), f"Expected answer to be a string, got {type(answer)}"
+            assert isinstance(answer, str), (
+                f"Expected answer to be a string, got {type(answer)}"
+            )
 
             # save the usage of each of the client in a usage json file
             def get_usage(model_client: ChatCompletionClient) -> Dict[str, int]:

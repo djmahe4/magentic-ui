@@ -16,15 +16,15 @@ from autogen_agentchat.messages import (
     TextMessage,
 )
 from autogen_agentchat.conditions import TimeoutTermination
-from magentic_ui import OrchestratorConfig
-from magentic_ui.eval.basesystem import BaseSystem
-from magentic_ui.eval.models import BaseTask, BaseCandidate, WebVoyagerCandidate
-from magentic_ui.types import CheckpointEvent
-from magentic_ui.agents import WebSurfer, CoderAgent, FileSurfer
-from magentic_ui.teams import GroupChat
-from magentic_ui.tools.playwright.browser import VncDockerPlaywrightBrowser
-from magentic_ui.tools.playwright.browser import LocalPlaywrightBrowser
-from magentic_ui.tools.playwright.browser.utils import get_available_port
+from magentic_red_ui import OrchestratorConfig
+from magentic_red_ui.eval.basesystem import BaseSystem
+from magentic_red_ui.eval.models import BaseTask, BaseCandidate, WebVoyagerCandidate
+from magentic_red_ui.types import CheckpointEvent
+from magentic_red_ui.agents import WebSurfer, CoderAgent, FileSurfer
+from magentic_red_ui.teams import GroupChat
+from magentic_red_ui.tools.playwright.browser import VncDockerPlaywrightBrowser
+from magentic_red_ui.tools.playwright.browser import LocalPlaywrightBrowser
+from magentic_red_ui.tools.playwright.browser.utils import get_available_port
 
 
 logger = logging.getLogger(__name__)
@@ -272,9 +272,9 @@ class MagenticUIAutonomousSystem(BaseSystem):
                     # remove the "FINAL ANSWER:" part and get the string after it
                     answer = answer.split("FINAL ANSWER:")[1].strip()
 
-            assert isinstance(
-                answer, str
-            ), f"Expected answer to be a string, got {type(answer)}"
+            assert isinstance(answer, str), (
+                f"Expected answer to be a string, got {type(answer)}"
+            )
 
             # save the usage of each of the client in a usage json file
             def get_usage(model_client: ChatCompletionClient) -> Dict[str, int]:

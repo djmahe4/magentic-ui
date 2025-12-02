@@ -1,73 +1,37 @@
-import asyncio
-from autogen_agentchat.messages import TextMessage
-from autogen_core import CancellationToken
-from autogen_ext.agents.azure._azure_ai_agent import AzureAIAgent
-from azure.ai.projects.aio import AIProjectClient
-from azure.identity.aio import DefaultAzureCredential
-import dotenv
-import os
-from typing import Union, Any, Dict, Optional
-from autogen_core.models import ChatCompletionClient
-from autogen_core import ComponentModel
-from autogen_agentchat.agents import UserProxyAgent
+from typing import Any, Dict, List, Optional, Union
 
-from magentic_red_ui.tools.playwright.browser import get_browser_resource_config
-from magentic_red_ui.utils import get_internal_urls
-from magentic_red_ui.teams import GroupChat, RoundRobinGroupChat
-from magentic_red_ui.teams.orchestrator.orchestrator_config import OrchestratorConfig
-from magentic_red_ui.agents import (
-    WebSurfer,
-    CoderAgent,
+from autogen_agentchat.agents import UserProxyAgent
+from autogen_agentchat.base import ChatAgent
+from autogen_core import ComponentModel
+from autogen_core.models import ChatCompletionClient
+
+from .agents import (
     USER_PROXY_DESCRIPTION,
+    CoderAgent,
     FileSurfer,
+    FaraWebSurfer,
+    WebSurfer,
 )
-from magentic_red_ui.magentic_red_ui_config import MagenticUIConfig, ModelClientConfigs
-from magentic_red_ui.types import RunPaths
-from magentic_red_ui.agents.web_surfer import WebSurferConfig
-from magentic_red_ui.agents.users import DummyUserProxy, MetadataUserProxy
-from magentic_red_ui.approval_guard import (
+from .agents.mcp import McpAgent
+from .agents.users import DummyUserProxy, MetadataUserProxy
+from .agents.web_surfer import WebSurferConfig
+from .approval_guard import (
+    ApprovalConfig,
     ApprovalGuard,
     ApprovalGuardContext,
-    ApprovalConfig,
     BaseApprovalGuard,
 )
-from magentic_red_ui.input_func import InputFuncType, make_agentchat_input_func
-from magentic_red_ui.learning.memory_provider import MemoryControllerProvider
+from .input_func import InputFuncType, make_agentchat_input_func
+from .learning.memory_provider import MemoryControllerProvider
+from .magentic_red_ui_config import MagenticUIConfig, ModelClientConfigs
+from .teams import GroupChat, RoundRobinGroupChat
+from .teams.orchestrator.orchestrator_config import OrchestratorConfig
+from .tools.playwright.browser import get_browser_resource_config
+from .types import RunPaths
+from .utils import get_internal_urls
 
 
-async def azure_agent_example():
-    """
-    This is a simple example of how to use the AzureAIAgent.
-    You can create any agent in the Azure AI Foundry and add it to the Magentic-UI team.
-    """
-    credential = DefaultAzureCredential()
-
-    async with AIProjectClient.from_connection_string(  # type: ignore
-        credential=credential, conn_str=os.getenv("AI_PROJECT_CONNECTION_STRING", "")
-    ) as project_client:
-        azure_agent = AzureAIAgent(
-            name="azure_agent",
-            description="An AI assistant",
-            project_client=project_client,
-            deployment_name="gpt-4o",  # EDIT TO YOUR DEPLOYMENT NAME
-            instructions="You are a helpful assistant.",
-            metadata={"source": "AzureAIAgent"},
-        )
-
-        result = await azure_agent.on_messages(
-            messages=[
-                TextMessage(
-                    content="How are you doing?.",
-                    source="user",
-                )
-            ],
-            cancellation_token=CancellationToken(),
-            message_limit=5,
-        )
-        print(result)
-
-
-async def get_task_team_with_azure_agent(
+async def get_task_team(
     magentic_red_ui_config: Optional[MagenticUIConfig] = None,
     input_func: Optional[InputFuncType] = None,
     *,
@@ -75,7 +39,6 @@ async def get_task_team_with_azure_agent(
 ) -> GroupChat | RoundRobinGroupChat:
     """
     Creates and returns a GroupChat team with specified configuration.
-    This sample shows how to add an Azure AI Foundry agent to the team.
 
     Args:
         magentic_red_ui_config (MagenticUIConfig, optional): Magentic UI configuration for team. Default: None.
@@ -89,10 +52,13 @@ async def get_task_team_with_azure_agent(
 
     def get_model_client(
         model_client_config: Union[ComponentModel, Dict[str, Any], None],
+        is_action_guard: bool = False,
     ) -> ChatCompletionClient:
         if model_client_config is None:
             return ChatCompletionClient.load_component(
                 ModelClientConfigs.get_default_client_config()
+                if not is_action_guard
+                else ModelClientConfigs.get_default_action_guard_config()
             )
         return ChatCompletionClient.load_component(model_client_config)
 
@@ -129,7 +95,9 @@ async def get_task_team_with_azure_agent(
             magentic_red_ui_config.playwright_port,
             magentic_red_ui_config.inside_docker,
             headless=magentic_red_ui_config.browser_headless,
-            local=magentic_red_ui_config.browser_local,
+            local=magentic_red_ui_config.browser_local
+            or magentic_red_ui_config.run_without_docker,
+            network_name=magentic_red_ui_config.network_name,
         )
     )
 
@@ -144,6 +112,7 @@ async def get_task_team_with_azure_agent(
         memory_controller_key=magentic_red_ui_config.memory_controller_key,
         allow_follow_up_input=magentic_red_ui_config.allow_follow_up_input,
         final_answer_prompt=magentic_red_ui_config.final_answer_prompt,
+        sentinel_plan=magentic_red_ui_config.sentinel_plan,
     )
     websurfer_model_client = magentic_red_ui_config.model_client_configs.web_surfer
     if websurfer_model_client is None:
@@ -199,7 +168,8 @@ async def get_task_team_with_azure_agent(
 
     if magentic_red_ui_config.user_proxy_type in ["dummy", "metadata"]:
         model_client_action_guard = get_model_client(
-            magentic_red_ui_config.model_client_configs.action_guard
+            magentic_red_ui_config.model_client_configs.action_guard,
+            is_action_guard=True,
         )
 
         # Simple approval function that always returns yes
@@ -227,33 +197,44 @@ async def get_task_team_with_azure_agent(
             ),
         )
     with ApprovalGuardContext.populate_context(approval_guard):
-        web_surfer = WebSurfer.from_config(websurfer_config)
+        if magentic_red_ui_config.use_fara_agent:
+            web_surfer = FaraWebSurfer.from_config(websurfer_config)
+        else:
+            web_surfer = WebSurfer.from_config(websurfer_config)
     if websurfer_loop_team:
         # simplified team of only the web surfer
         team = RoundRobinGroupChat(
             participants=[web_surfer, user_proxy],
             max_turns=10000,
         )
-        await team.lazy_init()
         return team
+    coder_agent: CoderAgent | None = None
+    file_surfer: FileSurfer | None = None
+    if not magentic_red_ui_config.run_without_docker:
+        coder_agent = CoderAgent(
+            name="coder_agent",
+            model_client=model_client_coder,
+            work_dir=paths.internal_run_dir,
+            bind_dir=paths.external_run_dir,
+            model_context_token_limit=magentic_red_ui_config.model_context_token_limit,
+            approval_guard=approval_guard,
+        )
 
-    coder_agent = CoderAgent(
-        name="coder_agent",
-        model_client=model_client_coder,
-        work_dir=paths.internal_run_dir,
-        bind_dir=paths.external_run_dir,
-        model_context_token_limit=magentic_red_ui_config.model_context_token_limit,
-        approval_guard=approval_guard,
-    )
+        file_surfer = FileSurfer(
+            name="file_surfer",
+            model_client=model_client_file_surfer,
+            work_dir=paths.internal_run_dir,
+            bind_dir=paths.external_run_dir,
+            model_context_token_limit=magentic_red_ui_config.model_context_token_limit,
+            approval_guard=approval_guard,
+        )
 
-    file_surfer = FileSurfer(
-        name="file_surfer",
-        model_client=model_client_file_surfer,
-        work_dir=paths.internal_run_dir,
-        bind_dir=paths.external_run_dir,
-        model_context_token_limit=magentic_red_ui_config.model_context_token_limit,
-        approval_guard=approval_guard,
-    )
+    # Setup any mcp_agents
+    mcp_agents: List[McpAgent] = [
+        # TODO: Init from constructor?
+        McpAgent._from_config(config)  # type: ignore
+        for config in magentic_red_ui_config.mcp_agent_configs
+    ]
 
     if (
         orchestrator_config.memory_controller_key is not None
@@ -266,37 +247,22 @@ async def get_task_team_with_azure_agent(
         )
     else:
         memory_provider = None
-    credential = DefaultAzureCredential()
 
-    async with AIProjectClient.from_connection_string(  # type: ignore
-        credential=credential, conn_str=os.getenv("AI_PROJECT_CONNECTION_STRING", "")
-    ) as project_client:
-        azure_reasoning_agent = AzureAIAgent(
-            name="azure_reasoning_agent",
-            description="An AI assistant that can help with complex math and logic tasks",
-            project_client=project_client,
-            deployment_name="o3-mini",  # EDIT TO YOUR DEPLOYMENT NAME
-            instructions="You are a helpful assistant.",
-            metadata={"source": "AzureAIAgent"},
-        )
+    team_participants: List[ChatAgent] = [
+        web_surfer,
+        user_proxy,
+    ]
+    if not magentic_red_ui_config.run_without_docker:
+        assert coder_agent is not None
+        assert file_surfer is not None
+        team_participants.extend([coder_agent, file_surfer])
+    team_participants.extend(mcp_agents)
 
-        team = GroupChat(
-            participants=[
-                web_surfer,
-                user_proxy,
-                coder_agent,
-                file_surfer,
-                azure_reasoning_agent,
-            ],
-            orchestrator_config=orchestrator_config,
-            model_client=model_client_orch,
-            memory_provider=memory_provider,
-        )
+    team = GroupChat(
+        participants=team_participants,
+        orchestrator_config=orchestrator_config,
+        model_client=model_client_orch,
+        memory_provider=memory_provider,
+    )
 
-        await team.lazy_init()
-        return team
-
-
-if __name__ == "__main__":
-    dotenv.load_dotenv()
-    asyncio.run(azure_agent_example())
+    return team

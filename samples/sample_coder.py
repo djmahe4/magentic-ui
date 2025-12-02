@@ -3,8 +3,8 @@ import argparse
 from autogen_agentchat.ui import Console
 from autogen_ext.models.openai import OpenAIChatCompletionClient
 from autogen_agentchat.conditions import TextMentionTermination
-from magentic_ui.agents import CoderAgent
-from magentic_ui.teams import RoundRobinGroupChat
+from magentic_red_ui.agents import CoderAgent
+from magentic_red_ui.teams import RoundRobinGroupChat
 from autogen_agentchat.agents import UserProxyAgent
 
 

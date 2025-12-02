@@ -2,12 +2,12 @@ from typing import List, Set
 
 import pytest
 from autogen_ext.tools.mcp import SseServerParams, StdioServerParams
-from magentic_ui.tools.mcp import (
+from magentic_red_ui.tools.mcp import (
     AggregateMcpWorkbench,
     NamedMcpServerParams,
 )
 
-from magentic_ui.tools.mcp._aggregate_workbench import (
+from magentic_red_ui.tools.mcp._aggregate_workbench import (
     escape_tool_name,
     unescape_tool_name,
     NAMESPACE_ESCAPE,
