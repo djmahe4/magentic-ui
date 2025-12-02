@@ -272,9 +272,9 @@ class MagenticUIAutonomousSystem(BaseSystem):
                     # remove the "FINAL ANSWER:" part and get the string after it
                     answer = answer.split("FINAL ANSWER:")[1].strip()
 
-            assert isinstance(
-                answer, str
-            ), f"Expected answer to be a string, got {type(answer)}"
+            assert isinstance(answer, str), (
+                f"Expected answer to be a string, got {type(answer)}"
+            )
 
             # save the usage of each of the client in a usage json file
             def get_usage(model_client: ChatCompletionClient) -> Dict[str, int]:

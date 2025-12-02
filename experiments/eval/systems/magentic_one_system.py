@@ -201,9 +201,9 @@ class MagenticOneSystem(BaseSystem):
             else:
                 answer = messages_so_far[-1].content
 
-            assert isinstance(
-                answer, str
-            ), f"Expected answer to be a string, got {type(answer)}"
+            assert isinstance(answer, str), (
+                f"Expected answer to be a string, got {type(answer)}"
+            )
 
             # save the usage of each of the client in a usage json file
             def get_usage(model_client: ChatCompletionClient) -> Dict[str, int]:

@@ -4,6 +4,7 @@ from systems.magentic_one_system import MagenticOneSystem
 from magentic_red_ui.eval.benchmarks import WebVoyagerBenchmark
 import os
 
+
 def test_magentic_red_ui_system():
     default_client_config = {
         "provider": "OpenAIChatCompletionClient",
